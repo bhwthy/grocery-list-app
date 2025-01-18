@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode .list-group-item {
+  background-color: #333;
+  color: white;
+}
+
+.dark-mode .form-control {
+  background-color: #222;
+  color: white;
+  border: 1px solid white;
+}
