@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = "http://localhost:8080/api/auth";
+const API_URL = "http://localhost:8080/api/grocery";  // ✅ Correct endpoint for grocery items
+const AUTH_URL = "http://localhost:8080/api/auth";   // ✅ Authentication endpoints
 
 export const login = async (username, password) => {
     return axios.post(`${API_URL}/login`, { username, password });
@@ -16,27 +17,25 @@ const getAuthHeader = () => {
 };
 
 export const getItems = async (page = 0, size = 5) => {
-    try {
-        const response = await axios.get(`${API_URL}?page=${page}&size=${size}`, getAuthHeader());
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching items:", error.response ? error.response.data : error.message);
-        throw error;
-    }
+    return axios.get(`${API_URL}?page=${page}&size=${size}`, getAuthHeader());  // ✅ Uses /api/grocery, not /api/auth
 };
 
 
+export const addItem = async (item) => {
+    return axios.post(API_URL, item, getAuthHeader());  // ✅ Corrected path
+};
 
-export const addItem = (item) => 
-    axios.post(`${API_URL}/grocery`, item, getAuthHeader());
+export const updateItem = async (id, item) => {
+    return axios.put(`${API_URL}/${id}`, item, getAuthHeader());  // ✅ Corrected path
+};
 
-export const updateItem = (id, item) => 
-    axios.put(`${API_URL}/grocery/${id}`, item, getAuthHeader());
+export const deleteItem = async (id) => {
+    return axios.delete(`${API_URL}/${id}`, getAuthHeader());  // ✅ Corrected path
+};
 
-export const deleteItem = (id) => 
-    axios.delete(`${API_URL}/grocery/${id}`, getAuthHeader());
-
-export const searchItems = (keyword, page = 0, size = 10) =>
-    axios.get(`http://localhost:8080/api/grocery/search?keyword=${keyword}&page=${page}&size=${size}`);
-
-
+export const searchItems = async (query) => {
+    return axios.get(`${API_URL}/search`, {
+        params: { query },
+        ...getAuthHeader()
+    });
+};

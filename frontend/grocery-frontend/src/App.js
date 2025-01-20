@@ -19,19 +19,8 @@ function App() {
     };
 
     return (
-        <div className="container">
-            <h1 className="text-center my-4">Grocery List App</h1>
-            
-            {token ? (
-                <>
-                    <button className="btn btn-danger my-3" onClick={handleLogout}>
-                        Logout
-                    </button>
-                    <GroceryList />
-                </>
-            ) : (
-                <Login setToken={setToken} />
-            )}
+        <div>
+            {token ? <GroceryList /> : <Login setToken={setToken} />}
         </div>
     );
 }
